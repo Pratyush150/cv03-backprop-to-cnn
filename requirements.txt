@@ -1,0 +1,23 @@
+# The learning path is numpy and nothing else. Every forward pass, every
+# backward pass and every gradient in src/netfs/ is written against this line
+# alone -- see docs/DECISIONS.md, ADR-001.
+numpy>=1.22
+
+# Figures for examples/. Imported inside the example scripts, never by the
+# library, so `import netfs` works on a headless box with no plotting stack.
+matplotlib>=3.5
+
+# Test runner.
+pytest>=7.0
+
+# --- Everything below is a CHECKER, never a learner. -------------------------
+# scipy: an independent convolution implementation (scipy.signal.correlate2d)
+#        that our hand-written conv is asserted against.
+scipy>=1.7
+# torch (CPU): an independent autograd engine. Used ONLY in tests, ONLY to
+#        confirm our hand-derived gradients. It never trains anything here.
+#        Install the CPU wheel: pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.0
+# scikit-learn: ships the 8x8 handwritten-digit dataset used by example 09.
+#        Optional -- netfs.data falls back to a synthetic shapes dataset.
+scikit-learn>=1.0
